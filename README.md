@@ -6,8 +6,7 @@ Tricky Triangle
 Program to solve the tricky triangle problem (of arbitrary size and starting position)!
 	(for those who are not familiar, a picture of the game is below)
 
-![alt text](http://www.liebcraft.com/uploads/4/6/9/0/4690740/__3709963_orig.jpg "Tricky Triangle")
-
+<img src="http://www.liebcraft.com/uploads/4/6/9/0/4690740/__3709963_orig.jpg" width="400" height="400" />
 
 ## nitty gritty
 
