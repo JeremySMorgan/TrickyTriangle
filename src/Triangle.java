@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Triangle {
+public class Triangle implements Comparable{
 
     private double aColCoef = 1.0/8.0;
     private double bColCoef = 1.0/2.0;
@@ -16,8 +16,8 @@ public class Triangle {
 	public int numPieces;
 	private int initialEmptySpot;
 	private int numCols;
-	private int maxRows;
-	public ArrayList<Integer> emptySpots;
+	public int maxRows;
+
 	public ArrayList<Position> positions;
 	public ArrayList<Move> possibleMoves;
 	
@@ -29,11 +29,9 @@ public class Triangle {
             this.numCols = solveQuadratic(this.aColCoef,this.bColCoef, (this.cColVal - numPieces));
             this.maxRows = solveQuadratic(this.aRowCoef,this.bRowCoef, this.cRowVal- numPieces);
 
-            this.emptySpots = new ArrayList<Integer>();
-            this.emptySpots.add(initialEmptySpot);
-
             this.positions = getPositions(this.numPieces,initialEmptySpot);
             this.possibleMoves = new ArrayList<Move>();
+            
             setPossibleMoves();
         }
 
@@ -43,9 +41,43 @@ public class Triangle {
             
 	}
 	
-	public void makeMove(int mv){
-		possibleMoves.get(mv).makeMove();
-		setPossibleMoves();
+	public Triangle(int numPieces, ArrayList<Integer> emptySpots) throws InvalidArgumentException {
+       
+		if (this.isValidNumPieces(numPieces)){
+            this.numPieces = numPieces;
+            this.initialEmptySpot = initialEmptySpot;
+
+            this.numCols = solveQuadratic(this.aColCoef,this.bColCoef, (this.cColVal - numPieces));
+            this.maxRows = solveQuadratic(this.aRowCoef,this.bRowCoef, this.cRowVal- numPieces);
+
+            this.positions = getPositions(this.numPieces,emptySpots);
+            this.possibleMoves = new ArrayList<Move>();
+            
+            setPossibleMoves();
+        }
+
+        else{
+        	throw new InvalidArgumentException("Number of Pieces Invalid");       	
+        }
+	}
+
+	private ArrayList<Position> getPositions(int numPieces, ArrayList<Integer> emptySpots) throws InvalidArgumentException {
+		ArrayList<Position> returnPositions = new ArrayList<Position>();
+		for (int i = 1; i <= numPieces; i++){
+			boolean emptySpot = false;
+			for (Integer j : emptySpots){
+				if (j.intValue() == i){
+					emptySpot = true;
+				}
+			}
+			if (emptySpot){
+				returnPositions.add(new Position(this,this.getCol(i), this.getRow(i),true,i));
+			}
+			else {
+				returnPositions.add(new Position(this,this.getCol(i), this.getRow(i),false,i));
+			}
+		}
+		return returnPositions;
 	}
 
 	private void setPossibleMoves() {
@@ -56,6 +88,29 @@ public class Triangle {
         for (Position pos : positions){
         	this.possibleMoves.addAll(pos.getMoves());
         }
+	}
+	
+	private ArrayList<Position> getPositions(int numPieces,int initEmptySpot) throws InvalidArgumentException {
+		ArrayList<Position> returnPositions = new ArrayList<Position>();
+		for (int i = 1; i <= numPieces; i++){
+			if (i == initEmptySpot){
+				returnPositions.add(new Position(this,this.getCol(i), this.getRow(i),true,i));
+			}
+			else {
+				returnPositions.add(new Position(this,this.getCol(i), this.getRow(i),false,i));
+			}
+		}
+		return returnPositions;
+	}
+	
+	public void makeMove(Move mv){
+		mv.makeMove();
+		setPossibleMoves();
+	}
+	
+	public void makeMove(int mv){
+		possibleMoves.get(mv).makeMove();
+		setPossibleMoves();
 	}
 
 	static int getMidValue(int x1, int x2) {
@@ -75,19 +130,6 @@ public class Triangle {
 		}
 		System.out.println("Position at: col:"+col+", row: "+row+" Does not exist.");
 		return null;
-	}
-
-	private ArrayList<Position> getPositions(int numPieces,int initEmptySpot) throws InvalidArgumentException {
-		ArrayList<Position> returnPositions = new ArrayList<Position>();
-		for (int i = 1; i <= numPieces; i ++){
-			if (i == initEmptySpot){
-				returnPositions.add(new Position(this,this.getCol(i), this.getRow(i),true,i));
-			}
-			else {
-				returnPositions.add(new Position(this,this.getCol(i), this.getRow(i),false,i));
-			}
-		}
-		return returnPositions;
 	}
 
 	private int getRow(int pieceNumber) throws InvalidArgumentException {
@@ -195,9 +237,12 @@ public class Triangle {
                 i += 1;
             }
         }
+        System.out.println();
      }
 	
 	public void printMoves() {
+		if (possibleMoves.size() ==0)
+			System.out.println("NO Moves");
 		for (Move mv : possibleMoves){
 			System.out.println(mv);
 		}
@@ -217,16 +262,30 @@ public class Triangle {
 		return returnStr;
 	}
 	
+	// this method might not work
 	public boolean isValidSpot(int col, int row) {
+		
 		if ( row >= (Math.abs(col)+1) ){
+		
 			if ( (isOdd(col) && !isOdd(row) ) || (!isOdd(col) && isOdd(row) )  ){
-				if (row < maxRows){
+				if (row <= maxRows){
 					return true;
 				}
+				else{
+					
+				}
 			}
+			else{
+				
+			}
+		
+		}
+		else{
+			
 		}
 		return false;
 	}
+	
 
 	private boolean isOdd(int i) {
 		if (i % 2 == 0){
@@ -236,9 +295,7 @@ public class Triangle {
 	}
 
 	public void reset() throws InvalidArgumentException{
-		this.emptySpots.clear();
-		this.emptySpots.add(new Integer(initialEmptySpot));
-		
+
 		this.positions.clear();
 		this.positions.addAll(this.getPositions(this.numPieces, this.initialEmptySpot));
 		
@@ -246,5 +303,74 @@ public class Triangle {
 		setPossibleMoves();
 	}
 
+	
+
+	public void undoMove(Move mv){
+		
+		mv.from.isEmpty = false;
+		mv.mid.isEmpty  = false;
+		mv.to.isEmpty   = true;
+		
+		this.possibleMoves.clear();
+		setPossibleMoves();
+	}
+
+	public Triangle returnCopy() throws InvalidArgumentException {
+		
+		ArrayList<Integer> emptySpots = new ArrayList<Integer>();
+		for (Position p : positions){
+			if (p.isEmpty){
+				emptySpots.add(new Integer(p.n));
+			}
+		}
+		Triangle copy = new Triangle(numPieces, emptySpots);
+		return copy;
+	}
+	
+	public int nonNonEmptySpots(){
+		int ret = 0;
+		for (Position p : positions){
+			if (!p.isEmpty){
+				ret++;
+			}
+		}
+		return ret;
+	}
+
+	
+	// 0 == equal, -1 = non equal. This method is only is used to compare for equality.
+	@Override
+	public int compareTo(Object o) {
+		if (o instanceof Triangle){
+			Triangle oTri = (Triangle) o;
+			if (oTri.numPieces != this.numPieces){
+				try {
+					throw new InvalidArgumentException("Triangles are of unequal size. Cannot be compared");
+				} catch (InvalidArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+			}
+			for (int i = 0; i < this.positions.size(); i++){
+				if ( (this.positions.get(i).isEmpty ) != ( oTri.positions.get(i).isEmpty ) ){
+					return -1;
+				}
+			}
+			return 0;
+			
+		}
+		else{
+			try {
+				throw new InvalidArgumentException("Invalid input");
+			} catch (InvalidArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
+
+		return -1;
+	}
+
+	
 	
 }

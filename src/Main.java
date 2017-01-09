@@ -3,19 +3,16 @@ public class Main {
 
 	public static void main(String[] args) throws InvalidArgumentException {
 		
-		int numPieces = 21;
-		int initEmptySpot = 1;
+		int[] np = {6,10,15,21};
+		int ies = 1;
 		
-		Triangle tri = new Triangle(numPieces, initEmptySpot);
-		
-		TrieSolve ts;
-		try {
-			ts = new TrieSolve(numPieces, initEmptySpot);
-			ts.solve();
-		} catch (InvalidArgumentException e) {
-			e.printStackTrace();
+		for (int numPiecesInTri : np){
+			Triangle tri = new Triangle(numPiecesInTri, ies);
+			TrieSolve ts;
+			ts = new TrieSolve(tri);
+			ts.solve();			
 		}
-		
+
 	}
 
 }

@@ -18,10 +18,6 @@ public class Move {
 		this.from.isEmpty = true;
 		this.mid.isEmpty = true;
 		this.to.isEmpty = false;
-		
-		this.tri.emptySpots.add(from.n);
-		this.tri.emptySpots.add(mid.n);
-		this.tri.emptySpots.remove(new Integer(to.n));
 	}
 	
 	
