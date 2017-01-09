@@ -7,7 +7,7 @@ Program to solve the tricky triangle problem (of arbitrary size and starting pos
 	(for those who are not familiar, a picture of the game is below, and instructions can be found [here](http://ourpastimes.com/instructions-tricky-triangle-8329167.html)
 	)
 
-<img src="http://www.liebcraft.com/uploads/4/6/9/0/4690740/__3709963_orig.jpg" width="200" height="200" />
+<img src="http://www.liebcraft.com/uploads/4/6/9/0/4690740/__3709963_orig.jpg" width="125" height="125" />
 
 ## nitty gritty
 
