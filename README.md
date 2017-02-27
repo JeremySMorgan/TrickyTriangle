@@ -9,6 +9,11 @@ Program to solve the tricky triangle problem (of arbitrary size and starting pos
 
 <img src="http://www.liebcraft.com/uploads/4/6/9/0/4690740/__3709963_orig.jpg" width="125" height="125" />
 
+
+## Sample Output
+<img src="https://github.com/JeremySMorgan/Tricky_Triangle.program_run.gif" width="125" height="125" />
+
+
 ## nitty gritty
 
 The program searches through every possible game state by recursively making and un-making every possible move
