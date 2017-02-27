@@ -11,7 +11,7 @@ Program to solve the tricky triangle problem (of arbitrary size and starting pos
 
 
 ## Sample Output
-<img src="https://github.com/JeremySMorgan/Tricky_Triangle/blob/master/program_run.gif" width="125" height="125" />
+<img src="https://github.com/JeremySMorgan/Tricky_Triangle/blob/master/program_run.gif"/>
 
 
 ## nitty gritty
