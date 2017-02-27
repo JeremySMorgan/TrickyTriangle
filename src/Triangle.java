@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Triangle implements Comparable{
+public class Triangle {
 
     private double aColCoef = 1.0/8.0;
     private double bColCoef = 1.0/2.0;
@@ -20,6 +20,7 @@ public class Triangle implements Comparable{
 
 	public ArrayList<Position> positions;
 	public ArrayList<Move> possibleMoves;
+	
 	
 	public Triangle(int numPieces, int initialEmptySpot) throws InvalidArgumentException {
         if (this.isValidNumPieces(numPieces)){
@@ -187,14 +188,14 @@ public class Triangle implements Comparable{
 	     return false;
 	}
 	
-	public void printTriangle(){
+	public void printTriangle(int offset){
 		System.out.println();
         int rowHeight = this.maxRows;
         int indent = (int) (rowHeight * this.numSpacesInPrint);
         String spacer = stringRepeater(" ",this.numSpacesInPrint);
         int i = 1;
         
-        System.out.print( stringRepeater(" ",indent) + spacer);
+        System.out.print( stringRepeater(" ",offset)+stringRepeater(" ",indent) + spacer);
         
         while (i < (this.numPieces+1)){
             if (this.isValidNumPieces(i)){
@@ -216,7 +217,7 @@ public class Triangle implements Comparable{
                 }
                     
                 i ++;
-                System.out.print( " \n"+ stringRepeater(" ",indent) );
+                System.out.print( " \n"+stringRepeater(" ",offset)+ stringRepeater(" ",indent) );
                 indent -= this.numSpacesInPrint;
             }
             else{
@@ -303,15 +304,12 @@ public class Triangle implements Comparable{
 		setPossibleMoves();
 	}
 
-	
-
 	public void undoMove(Move mv){
 		
 		mv.from.isEmpty = false;
 		mv.mid.isEmpty  = false;
 		mv.to.isEmpty   = true;
 		
-		this.possibleMoves.clear();
 		setPossibleMoves();
 	}
 
@@ -337,40 +335,4 @@ public class Triangle implements Comparable{
 		return ret;
 	}
 
-	
-	// 0 == equal, -1 = non equal. This method is only is used to compare for equality.
-	@Override
-	public int compareTo(Object o) {
-		if (o instanceof Triangle){
-			Triangle oTri = (Triangle) o;
-			if (oTri.numPieces != this.numPieces){
-				try {
-					throw new InvalidArgumentException("Triangles are of unequal size. Cannot be compared");
-				} catch (InvalidArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
-			}
-			for (int i = 0; i < this.positions.size(); i++){
-				if ( (this.positions.get(i).isEmpty ) != ( oTri.positions.get(i).isEmpty ) ){
-					return -1;
-				}
-			}
-			return 0;
-			
-		}
-		else{
-			try {
-				throw new InvalidArgumentException("Invalid input");
-			} catch (InvalidArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}	
-		}
-
-		return -1;
-	}
-
-	
-	
 }

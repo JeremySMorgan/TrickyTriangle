@@ -22,7 +22,8 @@ public class Move {
 	
 	
 	public String toString(){
-		return "MOVE object: from:"+from.n+" | mid: "+ mid.n+ " | to: "+to.n;
+		return "("+from.n + " -> "+to.n+")";
+		//return "MOVE object: from:"+from.n+" | mid: "+ mid.n+ " | to: "+to.n;
 	}
 
 }

@@ -20,11 +20,11 @@ public class BruteForceSolve {
 		
 		int[] moves = {0, 2, 2, 1, 5, 4, 2, 1, 1, 3, 1, 0, 0};
 		Triangle temp = new Triangle(numPieces,initialEmptySpot );
-		temp.printTriangle();
+		temp.printTriangle(0);
 		for (int m : moves){
 			temp.printMoves();
 			temp.makeMove(m);
-			temp.printTriangle();
+			temp.printTriangle(0);
 		}
 
 		temp.printMoves();
@@ -42,7 +42,7 @@ public class BruteForceSolve {
 		int numLeft = tri.numPieces-1;
 		
 		Triangle temp = new Triangle(numPieces,initialEmptySpot );
-		temp.printTriangle();
+		temp.printTriangle(0);
 		
 		while (numLeft != 1){
 			int possibleMoveCount = temp.possibleMoves.size();
@@ -70,7 +70,7 @@ public class BruteForceSolve {
 				temp.printMoves();
 				temp.makeMove(randomMoveCount);
 				numLeft--;
-				temp.printTriangle();
+				temp.printTriangle(0);
 			}
 
 		} 

@@ -40,7 +40,7 @@ public class Position {
 			if (debug){
 				System.out.println(" // ------------------------------------------------- //");
 				System.out.println("finding spots! this.col: "+this.col+" this.row: "+this.row);
-				this.triangle.printTriangle();
+				this.triangle.printTriangle(0);
 			}
 
 			
