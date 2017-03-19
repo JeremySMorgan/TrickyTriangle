@@ -1,7 +1,7 @@
 Tricky Triangle
 ======
 
-## overview
+## Overview
 
 Program to solve the tricky triangle problem (of arbitrary size and starting position)!
 	(for those who are not familiar, a picture of the game is below, and instructions can be found [here](http://ourpastimes.com/instructions-tricky-triangle-8329167.html)
